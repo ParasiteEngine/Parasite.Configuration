@@ -1,0 +1,69 @@
+##  Parasite::Configuration
+##  Copyright 2022 DeathBlizzard
+##  
+##  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following
+##  conditions are met:
+##  
+##  1.  Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+##      disclaimer.
+##  
+##  2.  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+##      disclaimer in the documentation and/or other materials provided with the distribution.
+##  
+##  3.  Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products
+##      derived from this software without specific prior written permission.
+##  
+##  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+##  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+##  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+##  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+##  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+##  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+##  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+##  Parasite::Configuration Sources
+##  This file contains the header, sources and their generated counterparts as a list to be supplied to the module's build
+##  target. This ensures that the main file is free from sources and makes it clean and fairly simple
+
+##  Parasite::Configuration Headers
+##  The follwing configuration snippet creates a list containing all the header files which are part of the
+##  Parasite::Configuration module
+set(
+    PARASITE_CONFIGURATION_HEADERS
+
+    Parasite/Configuration.hh
+)
+
+##  Parasite::Configuration Generated Headers
+##  The follwing configuration snippet creates a list containing all the generated / CMake configured header files which are
+##  part of the Parasite::Configuration module
+configure_file(
+    ${PARASITE_CONFIGURATION_INCLUDE_DIRECTORY}/Parasite/Configuration/Version.hh.in
+    ${PARASITE_CONFIGURATION_BUILD_DIRECTORY}/Include/Parasite/Configuration/Version.hh
+    @ONLY
+)
+set(
+    PARASITE_CONFIGURATION_GENERATED_HEADERS
+    Parasite/Configuration/Version.hh
+)
+set_source_files_properties(${PARASITE_CONFIGURATION_GENERATED_HEADERS} PROPERTIES GENERATED TRUE)
+
+foreach(HEADER_FILE IN LISTS PARASITE_CONFIGURATION_HEADERS)
+    target_sources(
+        ParasiteConfiguration PUBLIC
+        $<BUILD_INTERFACE:${PARASITE_CONFIGURATION_INCLUDE_DIRECTORY}/${HEADER_FILE}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${HEADER_FILE}>
+    )
+endforeach()
+foreach(GENERATED_HEADER_FILE IN LISTS PARASITE_CONFIGURATION_GENERATED_HEADERS)
+    target_sources(
+        ParasiteConfiguration PUBLIC
+        $<BUILD_INTERFACE:${PARASITE_CONFIGURATION_BUILD_DIRECTORY}/Include/${GENERATED_HEADER_FILE}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${GENERATED_HEADER_FILE}>
+    )
+endforeach()
+
+target_include_directories(
+    ParasiteConfiguration
+    INTERFACE ${PARASITE_CONFIGURATION_INCLUDE_DIRECTORY} ${PARASITE_CONFIGURATION_BUILD_DIRECTORY}/Include
+)
