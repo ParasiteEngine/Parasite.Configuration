@@ -32,6 +32,8 @@ set(
     PARASITE_CONFIGURATION_HEADERS
 
     Parasite/Configuration.hh
+    Parasite/Configuration/Macros.hh
+    Parasite/Configuration/Platform.hh
 )
 
 ##  Parasite::Configuration Generated Headers

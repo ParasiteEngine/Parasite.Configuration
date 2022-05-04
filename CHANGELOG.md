@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.1] - 2022-05-04
+### Modified
+-   `CMakeSources.txt` has been modified to include `Parasite/Configuration/Macros.hh` and `Parasite/Configuration/Platform.hh`
+
+## [0.2.0] - 2022-05-04
 ### Added
 -   `Parasite/Configuration/Macros.hh` to provide some useful utility macros
 -   `Parasite/Configuration/Platform.hh` to provide Platform detection, identification and declaration of conditional
